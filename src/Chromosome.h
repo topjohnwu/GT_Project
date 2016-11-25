@@ -12,7 +12,7 @@ class Chromosome
 	Chromosome();
 	~Chromosome();
 
-	vector<double> _genes;
+	vector<bool> _genes;
 	int _gameResult;
 	double _fitness;
 };
