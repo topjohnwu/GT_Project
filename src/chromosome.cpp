@@ -1,37 +1,14 @@
-#ifndef _CHROMOSOME_
-#define _CHROMOSOME_
+#include "chromosome.h"
 
-#include <vector>
-
-using namespace std;
-
-class Chromosome
+Chromosome::Chromosome(int order, int prec, int nPlayer): 
+		_order(order), _precision(prec), _nPlayers(nPlayer) 
 {
-	friend class CompactGA;
-
-	Chromosome(int order, int prec, int nPlayer): 
-		_order(order), _precision(prec), _nPlayers(nPlayer)
-	{
-		_nGene = order+nPlayer; // order-1 + nPlayer+1
-		_genes.resize(_nGene);
-		for(unsigned i = 0; i < _genes.size(); ++i) {
-			_genes[i].resize(_precision);
-		}
+	_nGene = order+nPlayer; // order-1 + nPlayer+1
+	_genes.resize(_nGene);
+	for(unsigned i = 0; i < _genes.size(); ++i) {
+		_genes[i].resize(_precision);
 	}
-	~Chromosome();
-
-	void geneDecode(vector<int>&);
-	void distribute(int, int, vector<int>&);
-	bool vote(int, const vector<int>&);
-
-	int _order; // 1 is the smallest
-	int _precision;
-	int _nGene;
-	int _nPlayers;
-	vector< vector<bool> > _genes; //[distribute value[_order-1], vote strategy[_nplayers+1]] 
-	int _gameResult;
-	double _fitness;
-};
+}
 
 void Chromosome::geneDecode(vector<int>& res) {
 	for(unsigned i = 0; i < _nGene; ++i) {
@@ -70,5 +47,3 @@ bool Chromosome::vote(int maxPrec, const vector<int>& distr) {
 	if(value >= threshold) return true;
 	return false;
 }
-
-#endif

@@ -27,3 +27,7 @@
 *.exe
 *.out
 *.app
+pirate_game
+
+# Sublime stuffs
+*.sublime-workspace

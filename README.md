@@ -1,2 +1,2 @@
 # GT_Project
-Pirate with Genetic Algorithm
+Pirate game using Genetic Algorithm

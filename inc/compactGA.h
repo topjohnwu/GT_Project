@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <iostream>
-#include "Chromosome.h"
+#include "chromosome.h"
 
 using namespace std;
 

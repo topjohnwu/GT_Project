@@ -1,0 +1,20 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Users/topjohnwu/GT_Project"
+		}
+	],
+	"SublimeLinter":
+	{
+	    "linters":
+	    {
+	        "clang": {
+	            "extra_flags": "-Wall -I${project_folder}/inc",
+	            "include_dirs": [
+	                "${project_folder}/inc"
+	            ]
+	        }
+	    }
+	}
+}
