@@ -22,13 +22,13 @@ class Chromosome
 
 	void geneDecode(vector<int>&);
 	void distribute(int, int, vector<int>&);
-	bool vote(const vector<int>&);
+	bool vote(int, const vector<int>&);
 
 	int _order; // 1 is the smallest
 	int _precision;
 	int _nGene;
 	int _nPlayers;
-	vector< vector<bool> > _genes;
+	vector< vector<bool> > _genes; //[distribute value[_order-1], vote strategy[_nplayers+1]] 
 	int _gameResult;
 	double _fitness;
 };
@@ -59,9 +59,16 @@ void Chromosome::distribute(int nRes, int maxPrec, vector<int>& distr) {
 	distr.push_back(tempRes);
 }
 
-bool Chromosome::vote(const vector<int>& dist) {
-	//todo
-	return true;
+bool Chromosome::vote(int maxPrec, const vector<int>& distr) {
+	vector<int> genes;
+	geneDecode(genes);
+	double value = 0;
+	double threshold = genes.back();
+	for(unsigned i = 0; i < _nPlayers; ++i) {
+		value += (double)genes[i+_order-1] * (double)distr[i] / (double)maxPrec;
+	}
+	if(value >= threshold) return true;
+	return false;
 }
 
 #endif

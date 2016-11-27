@@ -19,7 +19,7 @@ void CompactGA::executeGame(vector<Chromosome>& players) {
 		int nCount = 0;
 		int pCount = 1; // 1 for self vote
 		for(unsigned j = i+1; j < players.size(); ++j) {
-			if(players[j].vote(distribution)) ++pCount;
+			if(players[j].vote(_maxPrec, distribution)) ++pCount;
 			else ++ nCount;
 		}
 
