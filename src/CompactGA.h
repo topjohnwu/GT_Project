@@ -32,6 +32,7 @@ private:
 	int _nPlayers;
 	int _nResources;
 	int _genePrecision;
+	int _maxPrec; // 2^_genePrecision
 	vector< vector<Chromosome> > _populations;
 	vector< vector<double> > _probVec; // probability vector to generate new chromosomes)
 };
