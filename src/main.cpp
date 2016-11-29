@@ -3,6 +3,9 @@
 #include "pirateGame.h"
 
 int main(int argc, char const *argv[]) {
-	PirateGame game(1, 1, 1);
+	PirateGame game;
+	game.setParams(3, 10, 8, 10, 5);
+	game.runGA();
+	game.printCurrent(cout);
 	return 0;
 }

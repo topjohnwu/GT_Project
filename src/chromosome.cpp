@@ -1,4 +1,5 @@
 #include "chromosome.h"
+#include <random>
 
 void Chromosome::init(int order, int prec, int nPlayer) {
 	_order = order;
@@ -47,4 +48,14 @@ bool Chromosome::vote(int maxPrec, const vector<int>& distr) {
 	}
 	if(value >= threshold) return true;
 	return false;
+}
+
+void Chromosome::setGenes(const vector< vector<double> >& probVec) {
+	uniform_real_distribution<double> uniRand(0.0, 1.0);
+	default_random_engine generator;
+	for(int i = 0; i < _nGene; ++i) {
+		for(int j = 0; j < _precision; ++j) {
+			_genes[i][j] = (probVec[i][j] > uniRand(generator)) ? 1 : 0;
+		}
+	}
 }
