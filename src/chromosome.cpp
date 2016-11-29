@@ -1,5 +1,9 @@
 #include "chromosome.h"
 #include <random>
+#include <ctime>
+
+uniform_real_distribution<double> uniRand(0.0, 1.0);
+default_random_engine generator(time(0));
 
 void Chromosome::init(int order, int prec, int nPlayer) {
 	_order = order;
@@ -29,11 +33,11 @@ void Chromosome::distribute(int nRes, int maxPrec, vector<int>& distr) {
 	int tempRes = nRes;
 	vector<int> genes = geneDecode();
 	for(unsigned i = 0; i < _nPlayers - _order; ++i) {
-		distr[i] = 0;
+		distr.push_back(0);
 	}
 	for(unsigned i = 0; i < _order - 1; ++i) {
 		int temp = (double)tempRes*(double)genes[i]/(double)maxPrec+0.5;
-		distr[i] = temp;
+		distr.push_back(temp);
 		tempRes -= temp;
 	}
 	distr[_nPlayers - 1] = tempRes;
@@ -51,8 +55,8 @@ bool Chromosome::vote(int maxPrec, const vector<int>& distr) {
 }
 
 void Chromosome::setGenes(const vector< vector<double> >& probVec) {
-	uniform_real_distribution<double> uniRand(0.0, 1.0);
-	default_random_engine generator;
+	// uniform_real_distribution<double> uniRand(0.0, 1.0);
+	// default_random_engine generator;
 	for(int i = 0; i < _nGene; ++i) {
 		for(int j = 0; j < _precision; ++j) {
 			_genes[i][j] = (probVec[i][j] > uniRand(generator)) ? 1 : 0;

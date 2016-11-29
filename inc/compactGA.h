@@ -13,7 +13,7 @@ public:
 	// CompactGA(int, int, int); // <player number, population size>
 
 	// Player, population size, genePrecision, resources, generation number
-	void setParams(int, int, int, int, int);
+	void setParams(int, int, int, int, int, int);
 	void runGA();
 	void printCurrent(ostream&);
 
@@ -22,6 +22,7 @@ public:
 	void setGeneration(int);
 	void setPopSize(int);
 	void setResNum(int);
+	void setSimPopSize(int);
 
 protected:
 	virtual void executeGame(vector<Chromosome*>&) = 0;
@@ -36,6 +37,7 @@ protected:
 	int _nResources;
 	int _genePrecision;
 	int _maxPrec; // 2^_genePrecision
+	int _simPopSize;
 
 	vector< vector<Chromosome> > _populations;
 	vector< vector< vector<double> > > _probVec; // probability vector to generate new chromosomes)

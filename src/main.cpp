@@ -4,7 +4,7 @@
 
 int main(int argc, char const *argv[]) {
 	PirateGame game;
-	game.setParams(3, 10, 8, 10, 5);
+	game.setParams(3, 10, 8, 10, 20000, 100);
 	game.runGA();
 	game.printCurrent(cout);
 	return 0;

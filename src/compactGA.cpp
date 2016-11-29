@@ -4,12 +4,13 @@
 #include <iostream>
 #include <iomanip>
 
-void CompactGA::setParams(int player, int pop, int pre, int res, int gen) {
+void CompactGA::setParams(int player, int pop, int pre, int res, int gen, int sim) {
 	setPlayerNumber(player);
 	setPopSize(pop);
 	setPrecision(pre);
 	setResNum(res);
 	setGeneration(gen);
+	setSimPopSize(sim);
 }
 
 void CompactGA::init() {
@@ -49,6 +50,10 @@ void CompactGA::setGeneration(int gen) {
 	_nGeneration = gen;
 }
 
+void CompactGA::setSimPopSize(int sim) {
+	_simPopSize = sim;
+}
+
 void CompactGA::generate() {
 	for(unsigned i = 0; i < _nPlayers; ++i) {
 		for(unsigned j = 0; j < _popSize; ++j) {
@@ -73,6 +78,7 @@ void CompactGA::runGA() {
 	init();
 	for(unsigned u = 0; u < _nGeneration; ++u) {
 		if(checkTermCond()) break;
+		generate();
 		for(unsigned j = 0; j < _popSize; ++j) {
 			vector<Chromosome*> players;
 			for(unsigned k = 0; k < _nPlayers; ++k) {
@@ -94,12 +100,14 @@ void CompactGA::runGA() {
 					for(unsigned y = 0; y < _genePrecision; ++y) {
 						if(winner->_genes[x][y] != loser->_genes[x][y]) {
 							if(winner->_genes[x][y] == 1) {
-								_probVec[i][x][y] += 1.0 / _popSize;
+								_probVec[i][x][y] += 1.0 / _simPopSize;
 								if(_probVec[i][x][y] > 1.0) _probVec[i][x][y] = 1.0;
 							} else {
-								_probVec[i][x][y] -= 1.0 / _popSize;
+								_probVec[i][x][y] -= 1.0 / _simPopSize;
 								if(_probVec[i][x][y] < 0.0) _probVec[i][x][y] = 0.0;
 							}
+							if(_probVec[i][x][y] < 1.0 / _simPopSize) 
+								_probVec[i][x][y] = 0.0;
 						}
 					}
 				}
