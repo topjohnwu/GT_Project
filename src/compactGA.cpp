@@ -18,7 +18,7 @@ void CompactGA::init() {
 	for(int i = 0; i < _nPlayers; ++i) {
 		_populations[i].resize(_popSize);
 		for(int j = 0; j < _popSize; ++j) {
-			_populations[i][j].init(i, _genePrecision, _nPlayers);
+			_populations[i][j].init(_nPlayers - i, _genePrecision, _nPlayers);
 		}
 		_probVec[i].resize(2 * _nPlayers - i);
 		for(int j = 0, size = _probVec[i].size(); j < size; ++j) {
