@@ -3,7 +3,7 @@
 
 void PirateGame::executeGame(vector<Chromosome*>& players) {
 	vector<int> distribution;
-	distribution.resize(_nPlayers);
+	distribution.reserve(_nPlayers);
 	for(unsigned i = 0; i < _nPlayers; ++i) {
 		//1 player left case
 		if(i == _nPlayers - 1) {

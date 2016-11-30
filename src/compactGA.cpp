@@ -39,7 +39,7 @@ void CompactGA::setPopSize(int pop) {
 
 void CompactGA::setPrecision(int pre) {
 	_genePrecision = pre;
-	_maxPrec = pow(2, pre);
+	_maxPrec = pow(2, pre) - 1;
 }
 
 void CompactGA::setResNum(int res) {
@@ -66,6 +66,8 @@ bool CompactGA::checkTermCond() {
 	for(int i = 0, s1 = _probVec.size(); i < s1; ++i) {
 		for(int j = 0, s2 = _probVec[i].size(); j < s2; ++j) {
 			for(int k = 0, s3 = _probVec[i][j].size(); k < s3; ++k) {
+				//ignore convergence of vote stategy of top-ordered player
+				if(i == 0 && j >= _nPlayers - 1) continue;
 				if((_probVec[i][j][k] != 0.0) && (_probVec[i][j][k] != 1.0))
 					return false;
 			}
@@ -113,10 +115,27 @@ void CompactGA::runGA() {
 				}
 			}
 		}
+		// printCurrent(cout);
 	}
 }
 
-void CompactGA::printCurrent(ostream& out) {
+void CompactGA::printExpected(ostream& out) {
+	for(int i = 0, s1 = _probVec.size(); i < s1; ++i) {
+		for(int j = 0, s2 = _probVec[i].size(); j < s2; ++j) {
+			double temp = 0;
+			for(int k = 0, s3 = _probVec[i][j].size(); k < s3; ++k) {
+				temp *= 2;
+				temp += _probVec[i][j][k];
+				// out << setprecision(3) << _probVec[i][j][k] << " ";
+			}
+			out << setprecision(3) << (double)temp / (double)_maxPrec << ' ';
+		}
+		out << "\n";
+	}
+	out.flush();
+}
+
+void CompactGA::printBit(ostream& out) {
 	for(int i = 0, s1 = _probVec.size(); i < s1; ++i) {
 		for(int j = 0, s2 = _probVec[i].size(); j < s2; ++j) {
 			for(int k = 0, s3 = _probVec[i][j].size(); k < s3; ++k) {
