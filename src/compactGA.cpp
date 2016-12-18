@@ -19,9 +19,10 @@ void CompactGA::init() {
 	for(int i = 0; i < _nPlayers; ++i) {
 		_populations[i].resize(_popSize);
 		for(int j = 0; j < _popSize; ++j) {
-			_populations[i][j].init(_nPlayers - i, _genePrecision, _nPlayers);
+			_populations[i][j].init(_nPlayers - i, _genePrecision, _nPlayers, _nResources);
 		}
-		_probVec[i].resize(2 * _nPlayers - i);
+		// _probVec[i].resize(2 * _nPlayers - i);
+		_probVec[i].resize(_nPlayers - i);
 		for(int j = 0, size = _probVec[i].size(); j < size; ++j) {
 			_probVec[i][j].resize(_genePrecision, 0.5);
 		}
@@ -117,6 +118,40 @@ void CompactGA::runGA() {
 		}
 		// printCurrent(cout);
 	}
+}
+
+void CompactGA::printResult(ostream& out) {
+	for(int i = 0, s1 = _probVec.size(); i < s1; ++i) {
+		int tempRes = _nResources;
+		vector<double> genes;
+		genes.reserve(_nPlayers - i);
+		// convert result bits to double
+		for(int j = 0, s2 = _probVec[i].size(); j < s2; ++j) {
+			double temp = 0;
+			for(int k = 0, s3 = _probVec[i][j].size(); k < s3; ++k) {
+				temp *= 2;
+				temp += _probVec[i][j][k];
+			}
+			genes.push_back(temp);
+		}
+
+		out << "total resources: " << _nResources << '\n';
+		out << "Player" << i+1 << ":\n";
+		out << "distribute: ";
+
+		// convert result to distribution
+		for(unsigned j = 0; j < i; ++j) {
+			out << "0 ";
+		}
+		for(unsigned j = 0; j < _nPlayers-i-1; ++j) {
+			int temp = (double)tempRes * genes[i] / (double)_maxPrec + 0.5;
+			out << temp << ' ';
+			tempRes -= temp;
+		}
+		out << tempRes << ' ';
+		out << "\nthreshold: " << genes.back() / (double)_maxPrec << '\n';
+	}
+	out.flush();
 }
 
 void CompactGA::printExpected(ostream& out) {

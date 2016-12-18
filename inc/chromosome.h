@@ -10,7 +10,7 @@ class Chromosome
 {
 public:
 	Chromosome() {};
-	void init(int, int, int);
+	void init(int, int, int, int);
 	vector<int> geneDecode();
 	void distribute(int, int, vector<int>&);
 	bool vote(int, const vector<int>&);
@@ -20,6 +20,7 @@ public:
 	int _precision;
 	int _nGene;
 	int _nPlayers;
+	int _nRes;
 	int _gameResult;
 	vector< vector<bool> > _genes; //[distribute value[_order-1], vote strategy[_nplayers+1]] 
 	double _fitness;

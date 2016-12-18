@@ -15,6 +15,7 @@ public:
 	// Player, population size, genePrecision, resources, generation number
 	void setParams(int, int, int, int, int, int);
 	void runGA();
+	void printResult(ostream&);
 	void printExpected(ostream&);
 	void printBit(ostream&);
 
