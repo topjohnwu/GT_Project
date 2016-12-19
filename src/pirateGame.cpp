@@ -2,9 +2,10 @@
 #include "pirateGame.h"
 
 void PirateGame::executeGame(vector<Chromosome*>& players) {
-	vector<int> distribution;
-	distribution.reserve(_nPlayers);
 	for(unsigned i = 0; i < _nPlayers; ++i) {
+		vector<int> distribution;
+		distribution.reserve(_nPlayers);
+
 		//1 player left case
 		if(i == _nPlayers - 1) {
 			players[i]->_gameResult = _nResources;

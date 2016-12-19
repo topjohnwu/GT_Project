@@ -27,6 +27,22 @@ void CompactGA::init() {
 			_probVec[i][j].resize(_genePrecision, 0.5);
 		}
 	}
+	// _probVec[0][0][0] = 0;
+	// _probVec[0][0][1] = 1;
+	// _probVec[0][0][2] = 1;
+	// _probVec[0][0][3] = 1;
+	// _probVec[0][1][0] = 0;
+	// _probVec[0][1][1] = 0;
+	// _probVec[0][1][2] = 0;
+	// _probVec[0][1][3] = 0;
+	// _probVec[1][1][0] = 1;
+	// _probVec[1][1][1] = 1;
+	// _probVec[1][1][2] = 1;
+	// _probVec[1][1][3] = 1;
+	// _probVec[2][0][0] = 1;
+	// _probVec[2][0][1] = 1;
+	// _probVec[2][0][2] = 1;
+	// _probVec[2][0][3] = 1;
 }
 
 void CompactGA::setPlayerNumber(int num) {
@@ -146,7 +162,7 @@ void CompactGA::printResult(ostream& out) {
 			out << "* ";
 		}
 		for(unsigned j = 0; j < _nPlayers-i-1; ++j) {
-			int temp = (double)tempRes * genes[i] / (double)_maxPrec + 0.5;
+			int temp = (double)tempRes * genes[j] / (double)_maxPrec + 0.5;
 			out << temp << ' ';
 			tempRes -= temp;
 		}

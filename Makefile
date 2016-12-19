@@ -1,7 +1,7 @@
 .PHONY: all clean
 
 CC = g++
-CPPFLAGS = -g -Wall -std=c++11
+CPPFLAGS = -O3 -Wall -std=c++11
 INCLUDE = -Iinc
 
 FLAGS = $(CPPFLAGS) $(INCLUDE)
