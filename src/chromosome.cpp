@@ -43,7 +43,7 @@ void Chromosome::distribute(int nRes, int maxPrec, vector<int>& distr) {
 		distr.push_back(temp);
 		tempRes -= temp;
 	}
-	distr[_nPlayers - 1] = tempRes;
+	distr.push_back(tempRes);
 }
 
 // original version that consider the whole distribution

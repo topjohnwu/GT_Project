@@ -23,7 +23,7 @@ public:
 	int _nRes;
 	int _gameResult;
 	vector< vector<bool> > _genes; //[distribute value[_order-1], vote strategy[_nplayers+1]] 
-	double _fitness;
+	// double _fitness;
 };
 
 #endif

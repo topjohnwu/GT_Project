@@ -92,6 +92,8 @@ void CompactGA::runGA() {
 		Chromosome *winner, *loser;
 		for(unsigned i = 0; i < _nPlayers; ++i) {
 			for(unsigned j = 0; j < _popSize; j += 2) {
+				if(_populations[i][j]._gameResult == _populations[i][j+1]._gameResult)
+					continue;
 				if(_populations[i][j]._gameResult > _populations[i][j+1]._gameResult) {
 					winner = &_populations[i][j];
 					loser = &_populations[i][j+1];
@@ -121,6 +123,7 @@ void CompactGA::runGA() {
 }
 
 void CompactGA::printResult(ostream& out) {
+	out << "total resources: " << _nResources << '\n';
 	for(int i = 0, s1 = _probVec.size(); i < s1; ++i) {
 		int tempRes = _nResources;
 		vector<double> genes;
@@ -135,13 +138,12 @@ void CompactGA::printResult(ostream& out) {
 			genes.push_back(temp);
 		}
 
-		out << "total resources: " << _nResources << '\n';
 		out << "Player" << i+1 << ":\n";
 		out << "distribute: ";
 
 		// convert result to distribution
 		for(unsigned j = 0; j < i; ++j) {
-			out << "0 ";
+			out << "* ";
 		}
 		for(unsigned j = 0; j < _nPlayers-i-1; ++j) {
 			int temp = (double)tempRes * genes[i] / (double)_maxPrec + 0.5;
@@ -149,7 +151,9 @@ void CompactGA::printResult(ostream& out) {
 			tempRes -= temp;
 		}
 		out << tempRes << ' ';
-		out << "\nthreshold: " << genes.back() / (double)_maxPrec << '\n';
+		out << "\nthreshold: ";
+		if(i == 0) out << "*\n";
+		else out << genes.back() / (double)_maxPrec << '\n';
 	}
 	out.flush();
 }
