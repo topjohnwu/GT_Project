@@ -137,6 +137,7 @@ void CompactGA::runGA() {
 		}
 		// printCurrent(cout);
 		if(u % gendiv80 == 0) cout << '=';
+		cout.flush();
 	}
 	cout << endl;
 }
