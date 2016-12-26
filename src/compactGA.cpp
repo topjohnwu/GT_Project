@@ -95,6 +95,7 @@ bool CompactGA::checkTermCond() {
 
 void CompactGA::runGA() {
 	init();
+	int gendiv80 = _nGeneration/80;
 	for(unsigned u = 0; u < _nGeneration; ++u) {
 		if(checkTermCond()) break;
 		generate();
@@ -122,10 +123,10 @@ void CompactGA::runGA() {
 						if(winner->_genes[x][y] != loser->_genes[x][y]) {
 							if(winner->_genes[x][y] == 1) {
 								_probVec[i][x][y] += 1.0 / _simPopSize;
-								if(_probVec[i][x][y] > 1.0) _probVec[i][x][y] = 1.0;
+								if(_probVec[i][x][y] > 0.98) _probVec[i][x][y] = 0.98;
 							} else {
 								_probVec[i][x][y] -= 1.0 / _simPopSize;
-								if(_probVec[i][x][y] < 0.0) _probVec[i][x][y] = 0.0;
+								if(_probVec[i][x][y] < 0.02) _probVec[i][x][y] = 0.02;
 							}
 							if(_probVec[i][x][y] < 1.0 / _simPopSize) 
 								_probVec[i][x][y] = 0.0;
@@ -135,7 +136,9 @@ void CompactGA::runGA() {
 			}
 		}
 		// printCurrent(cout);
+		if(u % gendiv80 == 0) cout << '=';
 	}
+	cout << endl;
 }
 
 void CompactGA::printResult(ostream& out) {
